@@ -70,11 +70,13 @@ function startCloudflare() {
       urlFound = true;
       const url = match[0];
 
-      // Copy to clipboard
+      // Copy to clipboard immediately
       exec(`powershell -NoProfile -Command "Set-Clipboard -Value '${url}'"`, () => {});
 
-      // Open in default browser
-      exec(`start ${url}`, () => {});
+      // Wait 5 seconds for Cloudflare DNS to propagate globally before opening browser
+      setTimeout(() => {
+        exec(`start ${url}`, () => {});
+      }, 5000);
 
       console.log('\n\x1b[32m%s\x1b[0m', '==========================================================================');
       console.log('\x1b[32m%s\x1b[0m', '  🎉 پیرۆزە! بەستەری پارێزراوی ئەپڵیکەیشنی سارا وێنە بۆ مۆبایل ئامادەیە:');
