@@ -1,13 +1,17 @@
 @echo off
-title Cloudflare Tunnel - Car Records SQL Server App
+title Cloudflare Tunnel - Sara Wena Mobile Web App
 color 0b
 echo =======================================================
-echo   Starting Car Records SQL Server App + Cloudflare
+echo   🚗 Starting Sara Wena Mobile Web App + Cloudflare
 echo =======================================================
 echo.
 start "Car App Server" /min node server.js
 timeout /t 2 /nobreak >nul
 echo.
-echo Connecting to Cloudflare Global Network...
-cloudflared tunnel --url http://127.0.0.1:3002
+echo Connecting to Cloudflare Global Network (HTTPS for Mobile)...
+if exist "%~dp0cloudflared.exe" (
+    "%~dp0cloudflared.exe" tunnel --url http://127.0.0.1:3002
+) else (
+    cloudflared tunnel --url http://127.0.0.1:3002
+)
 pause
