@@ -8,6 +8,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description" content="تۆمارکردنی زانیاری و وێنەی ئۆتۆمبێل — SQL Server">
   <title>تۆمارکردنی زانیاری و وێنەی ئۆتۆمبێل</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="سارا وێنە">
+  <meta name="application-name" content="سارا وێنە">
+  <meta name="mobile-web-app-capable" content="yes">
   <link rel="stylesheet" href="styles.css?v=25">
   <script src="lucide.min.js"></script>
 </head>
@@ -22,6 +28,9 @@
       </div>
     </div>
     <div id="user-session-box" style="display:flex; align-items:center; gap:0.6rem; flex-shrink:0;">
+      <button type="button" id="pwa-install-btn" class="btn btn-primary" style="display:none; padding:0.35rem 0.65rem; font-size:0.75rem; border-radius:6px; background:linear-gradient(135deg, #10b981, #059669); border:none; box-shadow:0 2px 8px rgba(16,185,129,0.3); font-weight:600; cursor:pointer;" title="Install Web App on Mobile">
+        📲 داگرتنی ئەپ
+      </button>
       <span id="logged-user-name" style="font-weight:700; font-size:0.78rem; color:var(--accent-cyan); white-space:nowrap;">Guest</span>
       <button type="button" class="btn btn-secondary" id="logout-btn" style="display:none; padding:0.35rem 0.7rem; font-size:0.72rem; border-radius:6px;" title="Logout">⎋</button>
     </div>
@@ -1194,5 +1203,40 @@
 
   <script src="config.js?v=1.3.3"></script>
   <script src="app.js?v=20260903-build180"></script>
+  <!-- PWA Service Worker & Mobile App Installation -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((reg) => console.log('[PWA] Service Worker active:', reg.scope))
+          .catch((err) => console.warn('[PWA] Service Worker reg error:', err));
+      });
+    }
+
+    let pwaDeferredPrompt = null;
+    const pwaInstallBtn = document.getElementById('pwa-install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      pwaDeferredPrompt = e;
+      if (pwaInstallBtn) {
+        pwaInstallBtn.style.display = 'inline-flex';
+        pwaInstallBtn.addEventListener('click', async () => {
+          if (!pwaDeferredPrompt) return;
+          pwaDeferredPrompt.prompt();
+          const choice = await pwaDeferredPrompt.userChoice;
+          if (choice.outcome === 'accepted') {
+            pwaInstallBtn.style.display = 'none';
+          }
+          pwaDeferredPrompt = null;
+        });
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+      console.log('[PWA] App successfully installed on device');
+    });
+  </script>
 </body>
 </html>

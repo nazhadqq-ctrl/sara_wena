@@ -1,0 +1,33 @@
+{
+  "name": "سیستەمی تۆمارکردنی زانیاری ئۆتۆمبێل",
+  "short_name": "سارا وێنە",
+  "description": "سیستەمی تۆمارکردنی زانیاری و پشکنینی وێنەی ئۆتۆمبێل - سارا وێنە",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#060910",
+  "theme_color": "#060910",
+  "orientation": "any",
+  "lang": "ckb",
+  "dir": "rtl",
+  "categories": ["business", "utilities"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
