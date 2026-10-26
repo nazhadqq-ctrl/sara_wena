@@ -1,17 +1,5 @@
 @echo off
-title Cloudflare Tunnel - Sara Wena Mobile Web App
-color 0b
-echo =======================================================
-echo   🚗 Starting Sara Wena Mobile Web App + Cloudflare
-echo =======================================================
-echo.
-start "Car App Server" /min node server.js
-timeout /t 2 /nobreak >nul
-echo.
-echo Connecting to Cloudflare Global Network (HTTPS for Mobile)...
-if exist "%~dp0cloudflared.exe" (
-    "%~dp0cloudflared.exe" tunnel --url http://127.0.0.1:3002
-) else (
-    cloudflared tunnel --url http://127.0.0.1:3002
-)
+chcp 65001 >nul
+title Cloudflare Tunnel - Sara Wena Mobile App
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0run-mobile-tunnel.ps1"
 pause
