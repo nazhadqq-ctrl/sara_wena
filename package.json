@@ -8,7 +8,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "tunnel": "node tunnel.js",
     "desktop": "node Start-Desktop-App.bat"
   },
   "dependencies": {
@@ -16,7 +15,6 @@
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^4.19.2",
-    "localtunnel": "^2.0.2",
     "mssql": "^11.0.1"
   },
   "engines": {
